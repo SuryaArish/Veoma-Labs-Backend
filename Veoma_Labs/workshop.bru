@@ -1,0 +1,27 @@
+meta {
+  name: workshop
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://127.0.0.1:8000/workshop
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "full_name": "velusamy",
+    "mobile_number": "9087654321",
+    "email": "velu@example.com",
+    "qualification": "Diploma in Engineering",
+    "workshop_name": "Foundation",
+    "workshop_type": "3d printing"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

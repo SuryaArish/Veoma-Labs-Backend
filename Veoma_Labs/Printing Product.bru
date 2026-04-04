@@ -1,0 +1,30 @@
+meta {
+  name: Printing Product
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://127.0.0.1:8000/printer-product
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "full_name": "gokul",
+    "email": "velu@example.com",
+    "whatsapp_number": "+60123456789",
+    "project_details": "Custom drone bracket",
+    "file_url": "https://storage.example.com/files/bracket.stl",
+    "material": "PLA+",
+    "length_x": 120.5,
+    "width_y": 80.0,
+    "height_z": 45.0
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

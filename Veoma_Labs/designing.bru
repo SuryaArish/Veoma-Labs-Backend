@@ -1,0 +1,29 @@
+meta {
+  name: designing
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://127.0.0.1:8000/designing
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "full_name": "Aisha Rahman",
+    "whatsapp_number": "+60123456789",
+    "email": "aisha@example.com",
+    "product_images": [
+      "https://veomalabs.com/uploads/design1.png",
+      "https://veomalabs.com/uploads/design2.png"
+    ],
+    "project_details": "Custom enclosure for Raspberry Pi 4"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

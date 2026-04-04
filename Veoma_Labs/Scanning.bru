@@ -1,0 +1,29 @@
+meta {
+  name: Scanning
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://127.0.0.1:8000/scanning
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "full_name": "Nurul Ain",
+    "whatsapp_number": "+60198765432",
+    "email": "nurul@example.com",
+    "image_urls": [
+      "https://storage.example.com/scans/obj_front.jpg",
+      "https://storage.example.com/scans/obj_back.jpg"
+    ],
+    "project_details": "3D scan of a vintage figurine for reproduction"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
