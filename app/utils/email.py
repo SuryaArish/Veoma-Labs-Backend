@@ -83,8 +83,7 @@ def _send_sync(subject: str, html_body: str) -> None:
     msg["To"] = settings.EMAIL_RECEIVER
     msg.attach(MIMEText(html_body, "html"))
 
-    with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT) as server:
-        server.starttls()
+    with smtplib.SMTP_SSL(settings.SMTP_HOST, 465) as server:
         server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
         server.sendmail(settings.SMTP_USER, settings.EMAIL_RECEIVER, msg.as_string())
 
