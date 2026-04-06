@@ -1,4 +1,3 @@
-import asyncio
 import logging
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -90,7 +89,7 @@ def _send_sync(subject: str, html_body: str) -> None:
         server.sendmail(settings.SMTP_USER, settings.EMAIL_RECEIVER, msg.as_string())
 
 
-async def send_submission_email(module_name: str, data: dict) -> None:
+def send_submission_email(module_name: str, data: dict) -> None:
     """Send a formatted HTML submission notification email.
 
     Args:
@@ -100,7 +99,7 @@ async def send_submission_email(module_name: str, data: dict) -> None:
     subject = "New Submission Received from Veoma Labs"
     body = _build_html(module_name, data)
     try:
-        await asyncio.to_thread(_send_sync, subject, body)
+        _send_sync(subject, body)
         logger.info("Email sent for: %s", module_name)
     except Exception:
         logger.exception("Failed to send email for: %s", module_name)
