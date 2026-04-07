@@ -30,3 +30,17 @@ app.include_router(workshop.router)
 @app.get("/", tags=["Health"])
 async def health_check() -> dict:
     return {"status": "ok", "message": "Veoma Labs API is running"}
+
+
+@app.get("/test-email", tags=["Health"])
+async def test_email() -> dict:
+    """Test SMTP connection and send a test email."""
+    import smtplib
+    from app.core import settings
+    try:
+        with smtplib.SMTP_SSL(settings.SMTP_HOST, 465) as server:
+            server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
+            server.sendmail(settings.SMTP_USER, settings.EMAIL_RECEIVER, "Subject: Test\n\nTest email from Render.")
+        return {"status": "ok", "message": "Email sent successfully"}
+    except Exception as e:
+        return {"status": "error", "detail": str(e)}

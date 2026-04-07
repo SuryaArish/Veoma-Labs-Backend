@@ -1,8 +1,7 @@
 import logging
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 from enum import Enum
+
+import resend
 
 from app.core import settings
 
@@ -77,15 +76,13 @@ def _build_html(module_name: str, data: dict) -> str:
 
 
 def _send_sync(subject: str, html_body: str) -> None:
-    msg = MIMEMultipart("alternative")
-    msg["Subject"] = subject
-    msg["From"] = settings.SMTP_USER
-    msg["To"] = settings.EMAIL_RECEIVER
-    msg.attach(MIMEText(html_body, "html"))
-
-    with smtplib.SMTP_SSL(settings.SMTP_HOST, 465) as server:
-        server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
-        server.sendmail(settings.SMTP_USER, settings.EMAIL_RECEIVER, msg.as_string())
+    resend.api_key = settings.RESEND_API_KEY
+    resend.Emails.send({
+        "from": "Veoma Labs <onboarding@resend.dev>",
+        "to": settings.EMAIL_RECEIVER,
+        "subject": subject,
+        "html": html_body,
+    })
 
 
 def send_submission_email(module_name: str, data: dict) -> None:
