@@ -5,11 +5,22 @@ meta {
 }
 
 post {
-  url: 
-  body: none
+  url: https://veoma-labs-backend.onrender.com/contact
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+      "full_name": "Kutty User",
+      "email": "test@example.com",
+      "mobile_number": "9876543210",
+      "location": "Chennai",
+      "user_message": "This is a test message"
+  }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
