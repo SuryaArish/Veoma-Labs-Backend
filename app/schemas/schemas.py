@@ -117,3 +117,20 @@ class WorkshopRegistrationResponse(WorkshopRegistrationCreate):
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+# ── Contact Message ───────────────────────────────────────────────────────────
+
+class ContactMessageCreate(BaseModel):
+    full_name: str
+    email: Optional[EmailStr] = None
+    mobile_number: Optional[str] = None
+    location: Optional[str] = None
+    user_message: Optional[str] = None
+
+
+class ContactMessageResponse(ContactMessageCreate):
+    id: uuid.UUID
+    created_at: datetime
+
+    model_config = {"from_attributes": True}

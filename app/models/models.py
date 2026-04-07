@@ -82,3 +82,16 @@ class WorkshopRegistration(Base):
         Enum("3d printing", "3d scanning", name="workshop_type_enum", schema="veoma")
     )
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now())
+
+
+class ContactMessage(Base):
+    __tablename__ = "contact_messages"
+    __table_args__ = {"schema": "veoma"}
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    full_name: Mapped[str] = mapped_column(Text, nullable=False)
+    email: Mapped[str | None] = mapped_column(Text)
+    mobile_number: Mapped[str | None] = mapped_column(Text)
+    location: Mapped[str | None] = mapped_column(Text)
+    user_message: Mapped[str | None] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now())

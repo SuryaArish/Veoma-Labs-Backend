@@ -25,6 +25,8 @@ _LABEL_MAP = {
     "height_z": "Height (Z)",
     "image_urls": "Image URLs",
     "product_images": "Product Images",
+    "location": "Location",
+    "user_message": "Message",
 }
 
 _IMAGE_FIELDS = {"file_url", "image_urls", "product_images"}
