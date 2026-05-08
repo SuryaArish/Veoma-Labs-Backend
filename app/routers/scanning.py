@@ -27,7 +27,7 @@ async def create_scanning(
     image_urls: list[str] = []
     for img in images:
         content = await img.read()
-        url = await upload_image("scanning", content, img.content_type or "image/jpeg")
+        url = await upload_image("scanning", content, img.content_type or "image/jpeg", img.filename)
         image_urls.append(url)
 
     data = {

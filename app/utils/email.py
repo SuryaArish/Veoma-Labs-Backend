@@ -29,9 +29,11 @@ _LABEL_MAP = {
     "user_message": "Message",
 }
 
-_IMAGE_FIELDS = {"file_url", "image_urls", "product_images"}
+_IMAGE_FIELDS = {"image_urls", "product_images"}
+_FILE_FIELDS = {"file_url"}
 
 _IMG_TAG = '<img src="{url}" alt="Uploaded Image" style="max-width:100%;height:auto;border-radius:8px;margin-top:4px;" />'
+_FILE_TAG = '<a href="{url}" target="_blank" style="color:#1a1a2e;font-weight:600;">{name}</a>'
 
 
 def _format_value(key: str, value) -> str:
@@ -41,6 +43,9 @@ def _format_value(key: str, value) -> str:
     if key in _IMAGE_FIELDS:
         urls = value if isinstance(value, list) else [value]
         return "".join(_IMG_TAG.format(url=u) for u in urls)
+    if key in _FILE_FIELDS:
+        urls = value if isinstance(value, list) else [value]
+        return "".join(_FILE_TAG.format(url=u, name=u.rsplit("/", 1)[-1]) for u in urls)
     if isinstance(value, list):
         return ", ".join(str(v) for v in value)
     return str(value)
