@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_db
 from app.models.models import PrinterProduct
-from app.schemas.schemas import PrinterProductResponse
+from app.schemas.schemas import PrinterProductCreate, PrinterProductResponse
 from app.utils.email import send_submission_email
 from app.utils.storage import upload_image
 
@@ -27,9 +27,9 @@ async def create_printer_product(
     height_z: Optional[float] = Form(None),
     file: Optional[UploadFile] = File(None),
 ) -> PrinterProduct:
-    """Insert a new printer product request, uploading file to Supabase Storage."""
+    """Accept multipart/form-data (with optional file upload)."""
     file_url: Optional[str] = None
-    if file:
+    if file and file.filename:
         content = await file.read()
         file_url = await upload_image(
             "printer-product",
@@ -49,6 +49,22 @@ async def create_printer_product(
         "height_z": height_z,
         "file_url": file_url,
     }
+    record = PrinterProduct(**data)
+    db.add(record)
+    await db.commit()
+    await db.refresh(record)
+    background_tasks.add_task(send_submission_email, "3D Printer Product", data)
+    return record
+
+
+@router.post("/json", response_model=PrinterProductResponse, status_code=201)
+async def create_printer_product_json(
+    payload: PrinterProductCreate,
+    background_tasks: BackgroundTasks,
+    db: AsyncSession = Depends(get_db),
+) -> PrinterProduct:
+    """Accept application/json (file already uploaded; file_url passed directly)."""
+    data = payload.model_dump()
     record = PrinterProduct(**data)
     db.add(record)
     await db.commit()
