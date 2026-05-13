@@ -85,7 +85,7 @@ def _build_html(module_name: str, data: dict) -> str:
 def _send_sync(subject: str, html_body: str) -> None:
     resend.api_key = settings.RESEND_API_KEY
     resend.Emails.send({
-        "from": "Veoma Labs <onboarding@resend.dev>",
+        "from": settings.EMAIL_SENDER,
         "to": settings.EMAIL_RECEIVER,
         "subject": subject,
         "html": html_body,

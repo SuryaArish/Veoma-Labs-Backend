@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.routers import designing, feedback, printer_product, scanning, workshop, contact
+from app.routers import designing, feedback, printer_product, scanning, workshop, contact, upload
 
 app = FastAPI(title="Veoma Labs API", version="1.0.0")
 
@@ -26,6 +26,7 @@ app.include_router(designing.router)
 app.include_router(feedback.router)
 app.include_router(workshop.router)
 app.include_router(contact.router)
+app.include_router(upload.router)
 
 
 @app.get("/", tags=["Health"])

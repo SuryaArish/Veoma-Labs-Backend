@@ -59,7 +59,8 @@ async def upload_file(
             content=file_bytes,
             headers={**_HEADERS, "Content-Type": content_type},
         )
-        response.raise_for_status()
+        if response.status_code not in (200, 201):
+            raise ValueError(f"Supabase storage upload failed [{response.status_code}]: {response.text}")
 
     return f"{_SUPABASE_URL}/storage/v1/object/public/{bucket}/{filename}"
 
